@@ -129,7 +129,7 @@
     }
 
     function showLeaderboard() {
-db.ref('levels').orderByChild('pos').once('value', snap => { ... });
+db.ref('levels').orderByChild('pos').on('value', snap => { ... });
             const players = {};
             snap.forEach(c => {
                 const l = c.val();
