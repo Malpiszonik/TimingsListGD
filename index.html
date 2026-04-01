@@ -8,46 +8,30 @@
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
     <style>
-        :root { 
-            --bg: #1c1c1c; --card-bg: #252525; --accent: #00ff88; --text-dim: #b3b3b3; 
-            --border: #333; --nav-bg: #111; --discord: #5865F2;
-        }
+        :root { --bg: #1c1c1c; --card-bg: #252525; --accent: #00ff88; --text-dim: #b3b3b3; --border: #333; --nav-bg: #111; }
         body { background: var(--bg); color: white; font-family: "Segoe UI", sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
-        
         nav { width: 100%; background: var(--nav-bg); padding: 15px 0; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .nav-title { font-weight: bold; letter-spacing: 2px; font-size: 1.4rem; text-transform: uppercase; cursor: pointer; }
         .nav-buttons { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; justify-content: center; }
-        .nav-link { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; font-weight: 600; cursor: pointer; border-bottom: 1px solid transparent; transition: 0.2s; }
+        .nav-link { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; font-weight: 600; cursor: pointer; transition: 0.2s; border-bottom: 1px solid transparent; }
         .nav-link:hover { color: white; border-color: white; }
-
-        .auth-box { background: #000; padding: 5px 15px; border-radius: 20px; display: flex; gap: 10px; border: 1px solid var(--border); }
-        
+        .auth-box { background: #000; padding: 5px 15px; border-radius: 20px; border: 1px solid var(--border); display: flex; gap: 10px; }
         .main-container { display: flex; width: 95%; max-width: 1200px; margin-top: 30px; gap: 25px; padding-bottom: 50px; }
         .list-section { flex: 2; display: flex; flex-direction: column; gap: 3px; }
-        
         .level-item { background: var(--card-bg); padding: 12px 20px; display: flex; align-items: center; cursor: pointer; transition: 0.15s; border-left: 3px solid transparent; }
         .level-item:hover { background: #2e2e2e; border-left-color: var(--accent); }
         .rank { font-size: 1.5rem; font-weight: 900; min-width: 50px; color: var(--text-dim); font-style: italic; }
         .thumb { width: 130px; height: 73px; margin-right: 20px; border-radius: 3px; border: 1px solid #444; object-fit: cover; }
-        
         .info-panel { flex: 1; background: var(--card-bg); padding: 25px; height: fit-content; position: sticky; top: 20px; border: 1px solid var(--border); border-radius: 4px; }
-        .stats-row { margin: 10px 0; font-size: 0.95rem; }
+        .stats-row { margin: 8px 0; font-size: 0.9rem; }
         .victor-name { display: block; color: var(--accent); font-weight: bold; margin-bottom: 5px; font-size: 0.9rem; cursor: pointer; }
         .victor-name:hover { text-decoration: underline; }
-
-        /* Leaderboard Styles */
-        .lb-item { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #333; cursor: pointer; transition: 0.2s; }
+        .lb-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #333; cursor: pointer; }
         .lb-item:hover { background: #333; }
-        .lb-rank { color: var(--accent); font-weight: bold; width: 30px; }
-        .player-card-level { font-size: 0.85rem; padding: 5px 0; border-bottom: 1px solid #333; color: var(--text-dim); }
-
-        .btn { width: 100%; padding: 12px; background: var(--accent); border: none; font-weight: bold; cursor: pointer; margin-top: 10px; border-radius: 4px; color: black; text-transform: uppercase; text-decoration: none; display: block; text-align: center; }
-
+        .btn { width: 100%; padding: 12px; background: var(--accent); border: none; font-weight: bold; cursor: pointer; margin-top: 10px; border-radius: 4px; text-transform: uppercase; color: black; display: block; text-align: center; text-decoration: none; }
         #auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: #222; padding: 30px; border-radius: 8px; width: 300px; text-align: center; border: 1px solid var(--accent); }
         input { width: 100%; padding: 10px; margin: 10px 0; background: #111; border: 1px solid #444; color: white; border-radius: 4px; box-sizing: border-box; }
-        
-        @media (max-width: 900px) { .main-container { flex-direction: column-reverse; } .info-panel { position: static; width: 100%; } }
     </style>
 </head>
 <body>
@@ -56,17 +40,15 @@
     <div class="nav-title" onclick="location.reload()">TIMING LIST</div>
     <div class="nav-buttons">
         <span class="nav-link" onclick="showLeaderboard()">Leaderboard</span>
-        <a href="https://docs.google.com/document/..." target="_blank" class="nav-link">Rules</a>
-        <a href="https://forms.gle/..." target="_blank" class="nav-link">Submit</a>
-        <div id="auth-ui" class="auth-box">
-            <span class="nav-link" onclick="openAuth()">Login / Register</span>
-        </div>
+        <a href="#" class="nav-link">Rules</a>
+        <a href="#" class="nav-link">Submit</a>
+        <div id="auth-ui" class="auth-box"><span class="nav-link" onclick="openAuth()">Login</span></div>
     </div>
 </nav>
 
 <div class="main-container">
-    <div class="list-section" id="timing-list">Loading...</div>
-    <div class="info-panel" id="info-panel">Select a level or check Leaderboard.</div>
+    <div class="list-section" id="timing-list">Loading levels...</div>
+    <div class="info-panel" id="info-panel">Select a level to view info.</div>
 </div>
 
 <div id="auth-modal">
@@ -75,8 +57,8 @@
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="pass" placeholder="Password">
         <button class="btn" onclick="handleAuth('login')">Login</button>
-        <button class="btn" style="background:#444; color:white" onclick="handleAuth('register')">Create Account</button>
-        <p onclick="closeAuth()" style="cursor:pointer; font-size:0.8rem; margin-top:15px; color:#888">Close</p>
+        <button class="btn" style="background:#444; color:white" onclick="handleAuth('register')">Register</button>
+        <p onclick="closeAuth()" style="cursor:pointer; color:#888; font-size:0.8rem; margin-top:10px;">Close</p>
     </div>
 </div>
 
@@ -87,144 +69,99 @@
         projectId: "gdtiminglist",
         appId: "1:1040164485204:web:4a49db649a5146cdf4d5c1"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
     const auth = firebase.auth();
 
-    // --- AUTH ---
-    function openAuth() { document.getElementById('auth-modal').style.display = 'flex'; }
-    function closeAuth() { document.getElementById('auth-modal').style.display = 'none'; }
-
-    function handleAuth(type) {
-        const user = document.getElementById('username').value.trim();
-        const p = document.getElementById('pass').value;
-        if (user.length < 4 || p.length < 6) return alert("Nick 4+ chars, Pass 6+ chars!");
-        const fakeEmail = user.toLowerCase() + "@timing.list";
-
-        if (type === 'register') {
-            auth.createUserWithEmailAndPassword(fakeEmail, p).then(closeAuth).catch(err => alert(err.message));
-        } else {
-            auth.signInWithEmailAndPassword(fakeEmail, p).then(closeAuth).catch(err => alert("Wrong data!"));
-        }
-    }
-
-    auth.onAuthStateChanged(user => {
-        const ui = document.getElementById('auth-ui');
-        if(user) {
-            ui.innerHTML = `<span style="color:var(--accent); font-weight:bold;">${user.email.split('@')[0]}</span> 
-                            <span class="nav-link" onclick="auth.signOut()" style="margin-left:10px">Logout</span>`;
-        } else {
-            ui.innerHTML = `<span class="nav-link" onclick="openAuth()">Login / Register</span>`;
-        }
-    });
-
-    // --- HELPERS ---
     function getID(url) {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
         const match = url.match(regExp);
         return (match && match[2].length == 11) ? match[2] : 'dQw4w9WgXcQ';
     }
 
-    // --- VIEW: LEVEL DETAILS ---
+    // --- AUTH ---
+    function openAuth() { document.getElementById('auth-modal').style.display = 'flex'; }
+    function closeAuth() { document.getElementById('auth-modal').style.display = 'none'; }
+    function handleAuth(t) {
+        const u = document.getElementById('username').value.trim();
+        const p = document.getElementById('pass').value;
+        const mail = u.toLowerCase() + "@timing.list";
+        if(t === 'register') auth.createUserWithEmailAndPassword(mail, p).then(closeAuth).catch(e => alert(e.message));
+        else auth.signInWithEmailAndPassword(mail, p).then(closeAuth).catch(e => alert("Error"));
+    }
+    auth.onAuthStateChanged(user => {
+        const ui = document.getElementById('auth-ui');
+        if(user) ui.innerHTML = `<span style="color:var(--accent)">${user.email.split('@')[0]}</span> <span class="nav-link" onclick="auth.signOut()" style="margin-left:10px">Logout</span>`;
+        else ui.innerHTML = `<span class="nav-link" onclick="openAuth()">Login</span>`;
+    });
+
+    // --- VIEWS ---
     function showDetails(l) {
-        const videoId = getID(l.ytLink);
+        const vId = getID(l.ytLink);
         const victorsHTML = l.victors ? l.victors.split(',').map(v => `<span class="victor-name" onclick="showPlayer('${v.trim()}')">• ${v.trim()}</span>`).join('') : 'None';
-        
         document.getElementById('info-panel').innerHTML = `
-            <img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" style="width:100%; border-radius:4px; margin-bottom:15px; border: 1px solid #444;">
-            <h2 style="margin:0">#${l.pos} - ${l.name}</h2>
-            <div class="stats-row"><b>Creator:</b> ${l.creator}</div>
-            <div class="stats-row"><b>Verifier:</b> <span class="victor-name" style="display:inline" onclick="showPlayer('${l.verifier}')">${l.verifier || 'Unknown'}</span></div>
-            <div class="stats-row"><b>Points:</b> ${l.points || 0}</div>
-            <a href="${l.ytLink}" target="_blank" class="btn">Watch Video</a>
-            <div style="margin-top:20px; border-top:1px solid #333; padding-top:15px;">
-                <b>Victors:</b><br>${victorsHTML}
+            <img src="https://img.youtube.com/vi/${vId}/mqdefault.jpg" style="width:100%; border-radius:4px; border:1px solid #444;">
+            <h2 style="margin:15px 0 5px 0">#${l.pos} - ${l.name}</h2>
+            <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:4px;">
+                <div class="stats-row"><b>Creator:</b> ${l.creator}</div>
+                <div class="stats-row"><b>Verifier:</b> <span class="victor-name" style="display:inline" onclick="showPlayer('${l.verifier}')">${l.verifier || 'Unknown'}</span></div>
+                <div class="stats-row"><b>Level ID:</b> <span style="color:var(--accent); font-family:monospace">${l.levelID || 'N/A'}</span></div>
+                <div class="stats-row"><b>Points:</b> ${l.points || 0}</div>
             </div>
+            <a href="${l.ytLink}" target="_blank" class="btn">Watch Video</a>
+            <div style="margin-top:20px; border-top:1px solid #333; padding-top:10px;"><b>Victors:</b><br>${victorsHTML}</div>
         `;
     }
 
-    // --- VIEW: LEADERBOARD ---
     function showLeaderboard() {
         db.ref('levels').once('value', snap => {
             const players = {};
-            snap.forEach(child => {
-                const l = child.val();
-                const pts = parseInt(l.points) || 0;
-                const people = new Set();
-                if(l.verifier) people.add(l.verifier.trim());
-                if(l.victors) l.victors.split(',').forEach(v => people.add(v.trim()));
-                
-                people.forEach(p => {
-                    if(p) players[p] = (players[p] || 0) + pts;
+            snap.forEach(c => {
+                const l = c.val();
+                const pBase = parseInt(l.points) || 0;
+                const seen = new Set();
+                if(l.verifier) {
+                    const v = l.verifier.trim();
+                    players[v] = (players[v] || 0) + (pBase + 10);
+                    seen.add(v);
+                }
+                if(l.victors) l.victors.split(',').forEach(vic => {
+                    const n = vic.trim();
+                    if(n && !seen.has(n)) { players[n] = (players[n] || 0) + pBase; seen.add(n); }
                 });
             });
-
             const sorted = Object.entries(players).sort((a,b) => b[1] - a[1]);
-            let html = `<h2>Leaderboard</h2>`;
-            sorted.forEach((p, i) => {
-                html += `
-                    <div class="lb-item" onclick="showPlayer('${p[0]}')">
-                        <span><span class="lb-rank">#${i+1}</span> ${p[0]}</span>
-                        <span style="color:#888">${p[1]} pts</span>
-                    </div>`;
-            });
-            document.getElementById('info-panel').innerHTML = html || "No players yet.";
-        });
-    }
-
-    // --- VIEW: PLAYER PROFILE ---
-    function showPlayer(playerName) {
-        db.ref('levels').once('value', snap => {
-            let totalPts = 0;
-            let completed = [];
-            
-            snap.forEach(child => {
-                const l = child.val();
-                const pts = parseInt(l.points) || 0;
-                const isVerifier = l.verifier && l.verifier.trim() === playerName;
-                const isVictor = l.victors && l.victors.split(',').map(v => v.trim()).includes(playerName);
-
-                if(isVerifier || isVictor) {
-                    totalPts += pts;
-                    completed.push({name: l.name, pos: l.pos, pts: pts, role: isVerifier ? "Verifier" : "Victor"});
-                }
-            });
-
-            completed.sort((a,b) => a.pos - b.pos);
-
-            let html = `
-                <h2 style="color:var(--accent); margin-bottom:5px;">${playerName}</h2>
-                <div style="font-size:1.2rem; margin-bottom:20px;">Total Points: ${totalPts}</div>
-                <b style="font-size:0.8rem; color:#888; text-transform:uppercase;">Completed Levels:</b>
-                <div style="margin-top:10px;">
-                    ${completed.map(c => `
-                        <div class="player-card-level">
-                            <b>#${c.pos} ${c.name}</b> <br>
-                            <small>${c.pts} pts (${c.role})</small>
-                        </div>
-                    `).join('')}
-                </div>
-                <button class="btn" style="margin-top:20px; background:#444; color:white" onclick="showLeaderboard()">Back to Ranking</button>
-            `;
+            let html = `<h2>Ranking</h2>`;
+            sorted.forEach((p, i) => html += `<div class="lb-item" onclick="showPlayer('${p[0]}')"><span>#${i+1} ${p[0]}</span><span style="color:#888">${p[1]} pts</span></div>`);
             document.getElementById('info-panel').innerHTML = html;
         });
     }
 
-    // --- INITIAL LOAD ---
+    function showPlayer(pName) {
+        db.ref('levels').once('value', snap => {
+            let total = 0, list = [];
+            snap.forEach(c => {
+                const l = c.val(), pts = parseInt(l.points) || 0;
+                const isV = l.verifier && l.verifier.trim() === pName;
+                const isVic = l.victors && l.victors.split(',').map(x => x.trim()).includes(pName);
+                if(isV) { total += (pts+10); list.push(`#${l.pos} ${l.name} (Verifier +10)`); }
+                else if(isVic) { total += pts; list.push(`#${l.pos} ${l.name} (Victor)`); }
+            });
+            let html = `<h2>${pName}</h2><div style="font-size:1.2rem; color:var(--accent)">${total} Points</div><br>`;
+            list.forEach(item => html += `<div style="font-size:0.8rem; padding:5px 0; border-bottom:1px solid #333">${item}</div>`);
+            html += `<button class="btn" style="background:#444; color:white; margin-top:20px" onclick="showLeaderboard()">Back</button>`;
+            document.getElementById('info-panel').innerHTML = html;
+        });
+    }
+
     db.ref('levels').orderByChild('pos').on('value', snap => {
-        const container = document.getElementById('timing-list');
-        container.innerHTML = '';
-        snap.forEach(child => {
-            const l = child.val();
-            if(!l.name) return;
-            const div = document.createElement('div');
-            div.className = 'level-item';
-            div.onclick = () => showDetails(l);
-            div.innerHTML = `<div class="rank">#${l.pos}</div>
-                             <img class="thumb" src="https://img.youtube.com/vi/${getID(l.ytLink)}/mqdefault.jpg">
-                             <div><b>${l.name}</b><br><small style="color:#888">by ${l.creator}</small></div>`;
-            container.appendChild(div);
+        const cont = document.getElementById('timing-list'); cont.innerHTML = '';
+        snap.forEach(c => {
+            const l = c.val(); if(!l.name) return;
+            const d = document.createElement('div'); d.className = 'level-item';
+            d.onclick = () => showDetails(l);
+            d.innerHTML = `<div class="rank">#${l.pos}</div><img class="thumb" src="https://img.youtube.com/vi/${getID(l.ytLink)}/mqdefault.jpg"><div><b>${l.name}</b><br><small style="color:#888">by ${l.creator}</small></div>`;
+            cont.appendChild(d);
         });
     });
 </script>
